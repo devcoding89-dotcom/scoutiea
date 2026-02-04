@@ -8,12 +8,14 @@ A premium email outreach application with bulk email campaigns, AI-powered tools
 ## 🚀 Features
 
 - **📊 Dashboard** - Performance stats & campaign overview
+- **🔐 Authentication** - Secure Sign-up, Login, and Password Reset
+- **💎 Premium Tiers** - Free, Pro, and Enterprise subscription plans
 - **🚀 Campaign Builder** - Personalized bulk emails with dynamic tokens
 - **👥 Contact Manager** - CSV/Excel upload with duplicate detection
 - **📝 Template Library** - Save & reuse successful campaigns
 - **📈 Analytics** - Track opens, responses, and performance metrics
-- **🤖 AI Tools** - Grammar check, subject analyzer, spam checker, name extractor
-- **⚙️ Settings** - Email configuration & preferences
+- **🤖 AI Tools** - Grammar check, subject analyzer, spam checker, name extractor (Premium)
+- **⚙️ Settings** - Email configuration & user profile management
 - **🌙 Dark/Light Mode** - Premium design with smooth animations
 
 ## 🎨 Design Features

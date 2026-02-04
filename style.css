@@ -858,11 +858,236 @@ a:hover {
 .text-lg { font-size: 1.125rem; }
 .text-xl { font-size: 1.25rem; }
 
-.font-bold { font-weight: 700; }
-.font-semibold { font-weight: 600; }
-.font-medium { font-weight: 500; }
+.w-full { width: 100% !important; }
+.flex-1 { flex: 1; }
 
-.hidden { display: none !important; }
+.page-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-primary);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.auth-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-2xl);
+  width: 100%;
+  max-width: 450px;
+  box-shadow: var(--shadow-xl);
+  animation: fadeIn var(--transition-base) ease-out;
+}
+
+[data-theme="dark"] .auth-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.auth-header h2 {
+  font-size: 1.75rem;
+  margin-bottom: var(--spacing-xs);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-header p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Pricing Styles */
+.pricing-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  font-weight: 600;
+}
+
+.toggle-switch {
+  width: 50px;
+  height: 26px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform var(--transition-fast);
+}
+
+.pricing-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.pricing-card.featured {
+  border: 2px solid var(--primary-500);
+  background: var(--bg-secondary);
+  transform: scale(1.05);
+}
+
+.pricing-card.featured:hover {
+  transform: scale(1.05) translateY(-8px);
+}
+
+.premium-tag {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--gradient-primary);
+  color: white;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.pricing-header {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.pricing-header h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.pricing-header .price {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--text-primary);
+}
+
+.pricing-header .price span {
+  font-size: 1rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.pricing-features {
+  list-style: none;
+  margin-bottom: var(--spacing-2xl);
+  flex: 1;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-size: 0.875rem;
+}
+
+.pricing-features li.disabled {
+  color: var(--text-tertiary);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* User Profile Sidebar */
+.user-profile {
+  padding: var(--spacing-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-xl);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.user-info {
+  line-height: 1.2;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.user-plan {
+  font-size: 0.75rem;
+  color: var(--primary-500);
+  font-weight: 600;
+}
+
+/* Payment Modal Specifics */
+.card-input-wrapper {
+  position: relative;
+}
+
+.card-brand {
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+}
+
+.plan-summary {
+  background: var(--bg-tertiary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+}
+
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
 
 /* ===================================
    ANIMATIONS
