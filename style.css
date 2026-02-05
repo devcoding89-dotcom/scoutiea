@@ -9,32 +9,32 @@
    =================================== */
 
 :root {
-  /* Colors - Premium Palette */
-  --primary-50: #f0f4ff;
-  --primary-100: #e0eaff;
-  --primary-200: #c7d7fe;
-  --primary-300: #a5bbfc;
-  --primary-400: #8196f8;
-  --primary-500: #6366f1;
-  --primary-600: #4f46e5;
-  --primary-700: #4338ca;
-  --primary-800: #3730a3;
-  --primary-900: #312e81;
+  /* Colors - Signature Electric Violet Palette */
+  --primary-50: #f5f3ff;
+  --primary-100: #ede9fe;
+  --primary-200: #ddd6fe;
+  --primary-300: #c4b5fd;
+  --primary-400: #a78bfa;
+  --primary-500: #8b5cf6;
+  --primary-600: #7c3aed;
+  --primary-700: #6d28d9;
+  --primary-800: #5b21b6;
+  --primary-900: #4c1d95;
 
   /* Accent Colors */
-  --accent-purple: #a855f7;
-  --accent-pink: #ec4899;
+  --accent-purple: #c026d3;
+  --accent-pink: #db2777;
   --accent-cyan: #06b6d4;
-  --accent-green: #10b981;
-  --accent-orange: #f59e0b;
-  --accent-red: #ef4444;
+  --accent-green: #059669;
+  --accent-orange: #d97706;
+  --accent-red: #dc2626;
 
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  --gradient-warm: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-  --gradient-cool: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+  /* Gradients - Deep Space & Electric */
+  --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #4338ca 100%);
+  --gradient-accent: linear-gradient(135deg, #db2777 0%, #7c3aed 100%);
+  --gradient-success: linear-gradient(135deg, #059669 0%, #06b6d4 100%);
+  --gradient-warm: linear-gradient(135deg, #ea580c 0%, #fbbf24 100%);
+  --gradient-cool: linear-gradient(135deg, #4338ca 0%, #0f172a 100%);
 
   /* Neutral Colors - Light Mode */
   --bg-primary: #ffffff;
