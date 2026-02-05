@@ -184,6 +184,10 @@ function showPage(pageId) {
                 }
             }
         });
+
+        // Always refresh contact UI when showing a page to ensure dropdowns are sync'd
+        renderContactLists();
+        updateContactDropdowns();
     }
 }
 
@@ -425,6 +429,12 @@ function processContactFile(file) {
 
         const totalFound = totalCandidateCount;
         const validCount = validEmailsList.size;
+
+        if (validCount === 0) {
+            showNotification('No valid emails found. Please ensure your file is a CSV or TXT with standard email addresses.', 'error');
+            document.getElementById('uploadProgress').classList.add('hidden');
+            return;
+        }
 
         const contactList = {
             id: Date.now(),
