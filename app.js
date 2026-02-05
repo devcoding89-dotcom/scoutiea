@@ -391,35 +391,72 @@ function handleFileUpload(file) {
 }
 
 function processContactFile(file) {
-    // Generate simulated metadata for the uploaded file
-    const totalContacts = Math.floor(Math.random() * 1000) + 500;
-    const validEmails = Math.floor(totalContacts * 0.95);
-    const duplicates = totalContacts - validEmails;
+    const reader = new FileReader();
 
-    const contactList = {
-        id: Date.now(),
-        name: file.name,
-        total: totalContacts,
-        valid: validEmails,
-        duplicates: duplicates,
-        date: new Date().toISOString()
+    reader.onload = function (e) {
+        const content = e.target.result;
+        const lines = content.split(/\r?\n/);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const validEmailsList = new Set();
+        let invalidOrDuplicateCount = 0;
+        let totalCandidateCount = 0;
+
+        lines.forEach(line => {
+            // Split by comma, semicolon, or whitespace to find potential emails
+            const parts = line.split(/[,\s;]+/);
+            parts.forEach(part => {
+                const trimmed = part.trim();
+                if (trimmed) {
+                    totalCandidateCount++;
+                    const lowerEmail = trimmed.toLowerCase();
+                    if (emailRegex.test(trimmed)) {
+                        if (validEmailsList.has(lowerEmail)) {
+                            invalidOrDuplicateCount++;
+                        } else {
+                            validEmailsList.add(lowerEmail);
+                        }
+                    } else {
+                        invalidOrDuplicateCount++;
+                    }
+                }
+            });
+        });
+
+        const totalFound = totalCandidateCount;
+        const validCount = validEmailsList.size;
+
+        const contactList = {
+            id: Date.now(),
+            name: file.name,
+            total: totalFound,
+            valid: validCount,
+            duplicates: invalidOrDuplicateCount,
+            date: new Date().toISOString()
+        };
+
+        // Save to state and persistence
+        AppState.contacts.push(contactList);
+        saveContacts();
+
+        // Update UI
+        document.getElementById('totalContacts').textContent = totalFound.toLocaleString();
+        document.getElementById('validEmails').textContent = validCount.toLocaleString();
+        document.getElementById('duplicates').textContent = invalidOrDuplicateCount.toLocaleString();
+
+        document.getElementById('uploadResults').classList.remove('hidden');
+
+        renderContactLists();
+        updateContactDropdowns();
+
+        showNotification(`Processed ${totalFound} entries. Found ${validCount} valid emails! ✅`, 'success');
     };
 
-    // Save to state and persistence
-    AppState.contacts.push(contactList);
-    saveContacts();
+    reader.onerror = function () {
+        showNotification('Error reading file. Please try a different format.', 'error');
+    };
 
-    // Update UI
-    document.getElementById('totalContacts').textContent = totalContacts.toLocaleString();
-    document.getElementById('validEmails').textContent = validEmails.toLocaleString();
-    document.getElementById('duplicates').textContent = duplicates.toLocaleString();
-
-    document.getElementById('uploadResults').classList.remove('hidden');
-
-    renderContactLists();
-    updateContactDropdowns();
-
-    showNotification('Contacts uploaded successfully! ✅', 'success');
+    reader.readAsText(file);
 }
 
 function renderContactLists() {
