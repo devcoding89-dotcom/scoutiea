@@ -11,7 +11,19 @@
 </head>
 
 <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="app-container">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <div class="logo">
+                <div class="logo-icon">✉️</div>
+                <div class="logo-text">Scoutier</div>
+            </div>
+            <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
+                <span id="menuIcon">☰</span>
+            </button>
+        </header>
+
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
             <div class="logo">
@@ -27,30 +39,39 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-page="campaigns">
-                            <span class="nav-icon">🚀</span>
-                            <span>Campaigns</span>
-                        </a>
+
+                    <li class="nav-wrapper">
+                        <button class="nav-link" aria-expanded="false" id="outreachMenuBtn">
+                            <span class="nav-icon">📨</span>
+                            <span>Outreach</span>
+                            <span class="nav-arrow">▼</span>
+                        </button>
+                        <div class="nav-submenu" id="outreachSubmenu">
+                            <ul class="nav-submenu-list">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-page="campaigns">
+                                        <span>Campaigns</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-page="contacts">
+                                        <span>Contacts</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-page="templates">
+                                        <span>Templates</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-page="analytics">
+                                        <span>Analytics</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-page="contacts">
-                            <span class="nav-icon">👥</span>
-                            <span>Contacts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-page="templates">
-                            <span class="nav-icon">📝</span>
-                            <span>Templates</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-page="analytics">
-                            <span class="nav-icon">📈</span>
-                            <span>Analytics</span>
-                        </a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" data-page="ai-tools">
                             <span class="nav-icon">🤖</span>
@@ -197,7 +218,7 @@ Available tokens: {{firstName}}, {{lastName}}, {{email}}, {{company}}, {{positio
                             <div class="grid grid-2">
                                 <div class="form-group">
                                     <label class="form-label">Select Contact List</label>
-                                    <select class="form-select" required>
+                                    <select class="form-select" id="campaignContactSelect" required>
                                         <option value="">No contact lists yet - Upload contacts first</option>
                                     </select>
                                     <span class="form-hint">💡 Upload contacts from the Contacts page first</span>
@@ -298,7 +319,7 @@ Available tokens: {{firstName}}, {{lastName}}, {{email}}, {{company}}, {{positio
                     <div class="card-header">
                         <h3 class="card-title">Your Contact Lists</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="contactListContainer">
                         <div style="text-align: center; padding: 2rem 1rem;">
                             <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
                             <h4 style="margin-bottom: 0.5rem;">No contact lists yet</h4>

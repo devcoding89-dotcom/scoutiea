@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
     setupEventListeners();
     loadSavedData();
+    renderContactLists();
+    updateContactDropdowns();
 });
 
 function initializeApp() {
@@ -37,16 +39,49 @@ function initializeApp() {
 function setupEventListeners() {
     // Navigation
     document.querySelectorAll('.nav-link').forEach(link => {
+        // Skip toggle buttons that are not direct page links
+        if (!link.hasAttribute('data-page')) return;
+
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const page = link.getAttribute('data-page');
             showPage(page);
-
-            // Update active state
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
         });
     });
+
+    // Menu toggles
+    const outreachBtn = document.getElementById('outreachMenuBtn');
+    if (outreachBtn) {
+        outreachBtn.addEventListener('click', () => {
+            const submenu = document.getElementById('outreachSubmenu');
+            const isExpanded = outreachBtn.getAttribute('aria-expanded') === 'true';
+
+            outreachBtn.setAttribute('aria-expanded', !isExpanded);
+            submenu.classList.toggle('open');
+        });
+    }
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const sidebar = document.getElementById('sidebar');
+
+    if (mobileMenuBtn && sidebar && sidebarOverlay) {
+        mobileMenuBtn.addEventListener('click', () => {
+            const isActive = sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            document.getElementById('menuIcon').textContent = isActive ? '✕' : '☰';
+        });
+
+        // Close sidebar when clicking overlay
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            document.getElementById('menuIcon').textContent = '☰';
+        });
+    }
+
+    // Theme toggle
 
     // Theme toggle
     const themeToggle = document.getElementById('themeToggle');
@@ -89,15 +124,31 @@ function showPage(pageId) {
     // Check if it's an auth page
     const isAuthPage = ['login', 'signup'].includes(pageId);
 
-    // Toggle sidebar visibility
+    // Toggle sidebar visibility for auth pages
     const sidebar = document.getElementById('sidebar');
+    const mainContent = document.querySelector('.main-content');
+
     if (isAuthPage) {
         sidebar.style.display = 'none';
-        document.querySelector('.main-content').style.marginLeft = '0';
+        mainContent.style.marginLeft = '0';
     } else {
         sidebar.style.display = 'flex';
+        // Reset styles that might have been set by auth page logic
         if (window.innerWidth > 1024) {
-            document.querySelector('.main-content').style.marginLeft = '280px';
+            mainContent.style.marginLeft = '280px';
+        } else {
+            mainContent.style.marginLeft = '0';
+        }
+    }
+
+    // On mobile, close sidebar after navigation
+    if (window.innerWidth <= 768) {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (sidebar && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.getElementById('menuIcon').textContent = '☰';
         }
     }
 
@@ -119,6 +170,18 @@ function showPage(pageId) {
             link.classList.remove('active');
             if (link.dataset.page === pageId) {
                 link.classList.add('active');
+
+                // If link is inside a submenu, ensure submenu is open
+                const parentItem = link.closest('.nav-wrapper');
+                if (parentItem) {
+                    const submenu = parentItem.querySelector('.nav-submenu');
+                    const toggleBtn = parentItem.querySelector('button.nav-link');
+
+                    if (submenu && toggleBtn) {
+                        submenu.classList.add('open');
+                        toggleBtn.setAttribute('aria-expanded', 'true');
+                    }
+                }
             }
         });
     }
@@ -328,18 +391,115 @@ function handleFileUpload(file) {
 }
 
 function processContactFile(file) {
-    // Simulate file processing
+    // Generate simulated metadata for the uploaded file
     const totalContacts = Math.floor(Math.random() * 1000) + 500;
     const validEmails = Math.floor(totalContacts * 0.95);
     const duplicates = totalContacts - validEmails;
 
+    const contactList = {
+        id: Date.now(),
+        name: file.name,
+        total: totalContacts,
+        valid: validEmails,
+        duplicates: duplicates,
+        date: new Date().toISOString()
+    };
+
+    // Save to state and persistence
+    AppState.contacts.push(contactList);
+    saveContacts();
+
+    // Update UI
     document.getElementById('totalContacts').textContent = totalContacts.toLocaleString();
     document.getElementById('validEmails').textContent = validEmails.toLocaleString();
     document.getElementById('duplicates').textContent = duplicates.toLocaleString();
 
     document.getElementById('uploadResults').classList.remove('hidden');
 
+    renderContactLists();
+    updateContactDropdowns();
+
     showNotification('Contacts uploaded successfully! ✅', 'success');
+}
+
+function renderContactLists() {
+    const container = document.getElementById('contactListContainer');
+    if (!container) return;
+
+    if (AppState.contacts.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 2rem 1rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+                <h4 style="margin-bottom: 0.5rem;">No contact lists yet</h4>
+                <p class="text-secondary">Upload a CSV or Excel file to get started</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = `
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>List Name</th>
+                        <th>Total</th>
+                        <th>Valid</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    AppState.contacts.slice().reverse().forEach(list => {
+        html += `
+            <tr>
+                <td class="font-semibold">${list.name}</td>
+                <td>${list.total.toLocaleString()}</td>
+                <td><span style="color: var(--accent-green)">${list.valid.toLocaleString()}</span></td>
+                <td class="text-sm text-secondary">${formatDate(list.date)}</td>
+                <td>
+                    <button class="btn btn-outline btn-sm" onclick="deleteContactList(${list.id})">🗑️</button>
+                </td>
+            </tr>
+        `;
+    });
+
+    html += `
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
+
+function updateContactDropdowns() {
+    const select = document.getElementById('campaignContactSelect');
+    if (!select) return;
+
+    if (AppState.contacts.length === 0) {
+        select.innerHTML = '<option value="">No contact lists yet - Upload contacts first</option>';
+        return;
+    }
+
+    let html = '<option value="">Select a contact list</option>';
+    AppState.contacts.forEach(list => {
+        html += `<option value="${list.id}">${list.name} (${list.total} contacts)</option>`;
+    });
+
+    select.innerHTML = html;
+}
+
+function deleteContactList(id) {
+    if (confirm('Are you sure you want to delete this contact list?')) {
+        AppState.contacts = AppState.contacts.filter(list => list.id !== id);
+        saveContacts();
+        renderContactLists();
+        updateContactDropdowns();
+        showNotification('Contact list deleted', 'info');
+    }
 }
 
 // ===================================
