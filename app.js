@@ -135,7 +135,7 @@ function showPage(pageId) {
         sidebar.style.display = 'flex';
         // Reset styles that might have been set by auth page logic
         if (window.innerWidth > 1024) {
-            mainContent.style.marginLeft = '280px';
+            mainContent.style.marginLeft = 'var(--sidebar-w)';
         } else {
             mainContent.style.marginLeft = '0';
         }

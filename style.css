@@ -93,6 +93,10 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+
+  /* Layout Variables - Deep Elasticity */
+  --sidebar-w: clamp(240px, 18vw, 290px);
+  --content-p: clamp(var(--spacing-md), 4vw, var(--spacing-2xl));
 }
 
 /* Dark Mode */
@@ -202,7 +206,7 @@ a:hover {
 }
 
 .sidebar {
-  width: 280px;
+  width: var(--sidebar-w);
   background: var(--bg-secondary);
   border-right: 1px solid var(--border-color);
   padding: var(--spacing-xl);
@@ -264,8 +268,8 @@ a:hover {
 
 .main-content {
   flex: 1;
-  margin-left: 280px;
-  padding: var(--spacing-xl);
+  margin-left: var(--sidebar-w);
+  padding: var(--content-p);
   background: var(--bg-primary);
   min-height: 100vh;
   width: 100%;
@@ -307,19 +311,19 @@ a:hover {
 }
 
 .logo-icon {
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 5vw, 40px);
+  height: clamp(32px, 5vw, 40px);
   background: var(--gradient-primary);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
 .logo-text {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
   font-weight: 700;
   background: var(--gradient-primary);
   -webkit-background-clip: text;
@@ -728,12 +732,17 @@ a:hover {
 
 .table-container {
   overflow-x: auto;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-lg);
+  max-width: 100%;
+  /* Support for older browsers and extra fluidity */
   border: 1px solid var(--border-color);
 }
 
 .table {
   width: 100%;
+  min-width: 600px;
+  /* Ensure content doesn't squash too much */
   border-collapse: collapse;
   background: var(--bg-secondary);
 }
