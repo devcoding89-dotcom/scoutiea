@@ -407,6 +407,51 @@ a:hover {
   }
 }
 
+/* Mini Orbital Branding */
+.logo-icon.mini-orbital {
+  position: relative;
+  overflow: visible;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.mini-ring {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 1.5px solid transparent;
+  border-top-color: var(--primary-500);
+  border-radius: 50%;
+  animation: orbitRotate 2s linear infinite;
+  opacity: 0.8;
+}
+
+.mini-dot {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--primary-500);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--primary-500);
+  transform: translateX(-50%);
+  animation: miniDotRoll 2s linear infinite;
+  z-index: 3;
+}
+
+@keyframes miniDotRoll {
+  from {
+    transform: rotate(0deg) translateY(-20px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateY(-20px) rotate(-360deg);
+  }
+}
+
 /* ===================================
    NAVIGATION
    =================================== */
