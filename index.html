@@ -63,108 +63,20 @@
                             <span>Settings</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-page="pricing">
-                            <span class="nav-icon">💎</span>
-                            <span>Pricing</span>
-                        </a>
-                    </li>
+
                 </ul>
             </nav>
 
             <div style="margin-top: auto; padding-top: 2rem;">
-                <div class="user-profile mb-lg" id="userProfileSide" style="display: none;">
-                    <div class="flex items-center gap-sm">
-                        <div class="avatar">JD</div>
-                        <div class="user-info">
-                            <div class="user-name">John Doe</div>
-                            <div class="user-plan">Pro Plan ⭐</div>
-                        </div>
-                    </div>
-                </div>
                 <button class="btn btn-secondary mb-sm" id="themeToggle" style="width: 100%;">
                     <span id="themeIcon">🌙</span>
                     <span>Dark Mode</span>
-                </button>
-                <button class="btn btn-outline" id="logoutBtn" style="width: 100%; display: none;">
-                    <span>🚪</span>
-                    <span>Logout</span>
-                </button>
-                <button class="btn btn-primary" id="loginNavBtn" style="width: 100%;">
-                    <span>👤</span>
-                    <span>Sign In</span>
                 </button>
             </div>
         </aside>
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Auth Pages (Overlaying) -->
-            <div id="page-login" class="page-overlay hidden">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Welcome Back</h2>
-                        <p>Login to your Scoutier account</p>
-                    </div>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-input" placeholder="name@company.com" required>
-                        </div>
-                        <div class="form-group">
-                            <div class="flex-between">
-                                <label class="form-label">Password</label>
-                                <a href="#" class="text-sm" id="forgotPasswordBtn">Forgot?</a>
-                            </div>
-                            <input type="password" class="form-input" placeholder="••••••••" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="flex items-center gap-sm">
-                                <input type="checkbox">
-                                <span class="text-sm">Remember me</span>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-lg w-full">Sign In</button>
-                    </form>
-                    <div class="auth-footer">
-                        <p>Don't have an account? <a href="#" id="toSignupBtn">Create one for free</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="page-signup" class="page-overlay hidden">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Create Account</h2>
-                        <p>Start your 7-day free trial</p>
-                    </div>
-                    <form id="signupForm">
-                        <div class="form-group">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-input" placeholder="John Doe" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-input" placeholder="name@company.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Password</label>
-                            <input type="password" class="form-input" placeholder="Min. 8 characters" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="flex items-center gap-sm">
-                                <input type="checkbox" required>
-                                <span class="text-sm">I agree to the <a href="#">Terms of Service</a></span>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-lg w-full">Create Account</button>
-                    </form>
-                    <div class="auth-footer">
-                        <p>Already have an account? <a href="#" id="toLoginBtn">Sign in</a></p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Dashboard Page -->
             <div id="page-dashboard" class="page active">
                 <div class="page-header">
@@ -232,7 +144,8 @@
                         <div style="text-align: center; padding: 3rem 1rem;">
                             <div style="font-size: 4rem; margin-bottom: 1rem;">📭</div>
                             <h3 style="margin-bottom: 0.5rem;">No campaigns yet</h3>
-                            <p class="text-secondary" style="margin-bottom: 1.5rem;">Create your first email campaign to
+                            <p class="text-secondary" style="margin-bottom: 1.5rem;">Create your first email
+                                campaign to
                                 get started</p>
                             <button class="btn btn-primary"
                                 onclick="showPage('campaigns'); document.querySelector('[data-page=campaigns]').click();">
@@ -267,7 +180,8 @@
                                 <label class="form-label">Email Subject</label>
                                 <input type="text" class="form-input" id="emailSubject"
                                     placeholder="Use {{firstName}}, {{company}}, etc. for personalization" required>
-                                <span class="form-hint">💡 Tip: Personalized subjects increase open rates by 26%</span>
+                                <span class="form-hint">💡 Tip: Personalized subjects increase open rates by
+                                    26%</span>
                             </div>
 
                             <div class="form-group">
@@ -341,7 +255,8 @@ Available tokens: {{firstName}}, {{lastName}}, {{email}}, {{company}}, {{positio
                         <div class="file-upload" id="fileUpload">
                             <div class="file-upload-icon">📁</div>
                             <div class="file-upload-text">Drop your CSV or Excel file here</div>
-                            <div class="file-upload-hint">or click to browse • Supports .csv, .xlsx, .txt files</div>
+                            <div class="file-upload-hint">or click to browse • Supports .csv, .xlsx, .txt files
+                            </div>
                             <input type="file" id="fileInput" accept=".csv,.xlsx,.txt" style="display: none;">
                         </div>
 
@@ -407,7 +322,8 @@ Available tokens: {{firstName}}, {{lastName}}, {{email}}, {{company}}, {{positio
                             <span class="badge badge-primary">Popular</span>
                         </div>
                         <div class="card-body">
-                            <p class="text-sm text-secondary">Professional partnership outreach template with proven 32%
+                            <p class="text-sm text-secondary">Professional partnership outreach template with proven
+                                32%
                                 response rate.</p>
                         </div>
                         <div class="card-footer">
@@ -422,7 +338,8 @@ Available tokens: {{firstName}}, {{lastName}}, {{email}}, {{company}}, {{positio
                             <span class="badge badge-success">High Open Rate</span>
                         </div>
                         <div class="card-body">
-                            <p class="text-sm text-secondary">Announce new products with excitement. 78% open rate, 28%
+                            <p class="text-sm text-secondary">Announce new products with excitement. 78% open rate,
+                                28%
                                 response rate.</p>
                         </div>
                         <div class="card-footer">
@@ -437,7 +354,8 @@ Available tokens: {{firstName}}, {{lastName}}, {{email}}, {{company}}, {{positio
                             <span class="badge badge-info">3-Part Series</span>
                         </div>
                         <div class="card-body">
-                            <p class="text-sm text-secondary">Automated follow-up sequence that increases response rates
+                            <p class="text-sm text-secondary">Automated follow-up sequence that increases response
+                                rates
                                 by 45%.</p>
                         </div>
                         <div class="card-footer">
@@ -655,7 +573,8 @@ I came across {{company}} and was impressed by..."></textarea>
                                         <span class="badge badge-success">Personalized</span>
                                         <span class="badge badge-primary">Action-oriented</span>
                                     </div>
-                                    <p class="text-sm text-secondary mt-md">Great subject line! It's personalized and
+                                    <p class="text-sm text-secondary mt-md">Great subject line! It's personalized
+                                        and
                                         creates curiosity.</p>
                                 </div>
                             </div>
@@ -782,94 +701,6 @@ bob.johnson@startup.io"></textarea>
                         <button class="btn btn-primary">Save Preferences</button>
                     </div>
                 </div>
-
-                <div class="card mt-xl">
-                    <div class="card-header">
-                        <h3 class="card-title">Account Plan</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="flex-between mb-lg">
-                            <div>
-                                <h4>Professional Plan</h4>
-                                <p class="text-sm text-secondary">Unlimited emails, AI features, analytics</p>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-2xl font-bold">$49</div>
-                                <div class="text-sm text-secondary">per month</div>
-                            </div>
-                        </div>
-                        <button class="btn btn-outline">Upgrade Plan</button>
-                    </div>
-                </div>
-                <!-- Pricing Page -->
-                <div id="page-pricing" class="page hidden">
-                    <div class="page-header text-center">
-                        <h1 class="page-title">Unlock Premium Performance</h1>
-                        <p class="page-subtitle">Choose the plan that's right for your outreach needs</p>
-                        <div class="pricing-toggle mt-lg">
-                            <span>Monthly</span>
-                            <div class="toggle-switch"></div>
-                            <span>Yearly <span class="badge badge-success">Save 20%</span></span>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-3 gap-xl mt-xl">
-                        <!-- Free Plan -->
-                        <div class="pricing-card">
-                            <div class="pricing-header">
-                                <h3>Starter</h3>
-                                <div class="price">$0<span>/mo</span></div>
-                                <p>Perfect for trying out Scoutier</p>
-                            </div>
-                            <ul class="pricing-features">
-                                <li><span class="icon">✅</span> 100 emails/day</li>
-                                <li><span class="icon">✅</span> Basic analytics</li>
-                                <li><span class="icon">✅</span> 5 templates</li>
-                                <li class="disabled"><span class="icon">❌</span> AI subject analyzer</li>
-                                <li class="disabled"><span class="icon">❌</span> Premium support</li>
-                            </ul>
-                            <button class="btn btn-outline btn-lg w-full">Current Plan</button>
-                        </div>
-
-                        <!-- Pro Plan -->
-                        <div class="pricing-card featured">
-                            <div class="premium-tag">MOST POPULAR</div>
-                            <div class="pricing-header">
-                                <h3>Professional</h3>
-                                <div class="price">$49<span>/mo</span></div>
-                                <p>For growing outreach teams</p>
-                            </div>
-                            <ul class="pricing-features">
-                                <li><span class="icon">✅</span> 5,000 emails/day</li>
-                                <li><span class="icon">✅</span> Advanced analytics</li>
-                                <li><span class="icon">✅</span> Unlimited templates</li>
-                                <li><span class="icon">✅</span> AI-powered tools</li>
-                                <li><span class="icon">✅</span> Priority support</li>
-                            </ul>
-                            <button class="btn btn-primary btn-lg w-full" onclick="openModal('paymentModal')">Upgrade to
-                                Pro</button>
-                        </div>
-
-                        <!-- Enterprise Plan -->
-                        <div class="pricing-card">
-                            <div class="pricing-header">
-                                <h3>Enterprise</h3>
-                                <div class="price">$149<span>/mo</span></div>
-                                <p>For large-scale operations</p>
-                            </div>
-                            <ul class="pricing-features">
-                                <li><span class="icon">✅</span> Unlimited emails</li>
-                                <li><span class="icon">✅</span> Team collaboration</li>
-                                <li><span class="icon">✅</span> Dedicated IP</li>
-                                <li><span class="icon">✅</span> Custom API access</li>
-                                <li><span class="icon">✅</span> Dedicated account manager</li>
-                            </ul>
-                            <button class="btn btn-outline btn-lg w-full"
-                                onclick="showNotification('Contact sales for Enterprise plans', 'info')">Contact
-                                Sales</button>
-                        </div>
-                    </div>
-                </div>
         </main>
     </div>
 
@@ -883,11 +714,13 @@ bob.johnson@startup.io"></textarea>
             <div class="modal-body">
                 <div class="mb-lg">
                     <strong>Subject:</strong>
-                    <div id="previewSubject" class="mt-sm text-secondary">Quick question about Acme Corp</div>
+                    <div id="previewSubject" class="mt-sm text-secondary">Quick question about Acme Corp
+                    </div>
                 </div>
                 <div>
                     <strong>Body:</strong>
-                    <div id="previewBody" class="mt-sm text-secondary" style="white-space: pre-wrap;">Hi John,
+                    <div id="previewBody" class="mt-sm text-secondary" style="white-space: pre-wrap;">Hi
+                        John,
 
                         I noticed Acme Corp is doing amazing work in the tech space...
 
@@ -901,64 +734,10 @@ bob.johnson@startup.io"></textarea>
         </div>
     </div>
 
-    <!-- Modal for Premium Payment -->
-    <div class="modal-backdrop" id="paymentModal">
-        <div class="modal auth-card" style="max-width: 500px;">
-            <div class="modal-header">
-                <h3 class="modal-title">Complete Your Upgrade</h3>
-                <button class="modal-close" onclick="closeModal('paymentModal')">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="plan-summary mb-lg">
-                    <div class="flex-between">
-                        <span>Professional Plan (Monthly)</span>
-                        <span class="font-bold">$49.00</span>
-                    </div>
-                </div>
-
-                <form id="paymentForm">
-                    <div class="form-group">
-                        <label class="form-label">Cardholder Name</label>
-                        <input type="text" class="form-input" placeholder="Full Name on Card" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Card Number</label>
-                        <div class="card-input-wrapper">
-                            <input type="text" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19"
-                                required>
-                            <span class="card-brand">💳</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-2 gap-md">
-                        <div class="form-group">
-                            <label class="form-label">Expiry Date</label>
-                            <input type="text" class="form-input" placeholder="MM/YY" maxlength="5" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">CVV</label>
-                            <input type="password" class="form-input" placeholder="123" maxlength="4" required>
-                        </div>
-                    </div>
-
-                    <div class="payment-methods mb-lg">
-                        <p class="text-sm mb-sm">Or pay with:</p>
-                        <div class="flex gap-sm">
-                            <button type="button" class="btn btn-outline flex-1">PayPal</button>
-                            <button type="button" class="btn btn-outline flex-1">Google Pay</button>
-                        </div>
-                    </div>
-
-                    <p class="text-xs text-secondary mb-lg">By clicking "Pay Now", you agree to our Terms of Service.
-                        Your subscription will auto-renew until cancelled.</p>
-
-                    <button type="submit" class="btn btn-primary btn-lg w-full">
-                        <span>🔒</span>
-                        <span>Pay $49.00 Now</span>
-                    </button>
-                </form>
-            </div>
-        </div>
     </div>
+    </div>
+    </div>
+
 
     <script src="app.js"></script>
 </body>

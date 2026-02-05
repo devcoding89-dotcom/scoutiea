@@ -6,9 +6,6 @@
 const AppState = {
     currentPage: 'dashboard',
     theme: localStorage.getItem('theme') || 'dark',
-    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-    user: JSON.parse(localStorage.getItem('user')) || null,
-    plan: localStorage.getItem('plan') || 'Free',
     campaigns: JSON.parse(localStorage.getItem('campaigns')) || [],
     contacts: JSON.parse(localStorage.getItem('contacts')) || [],
     templates: []
@@ -21,9 +18,7 @@ const AppState = {
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
     setupEventListeners();
-    setupAuthEventListeners();
     loadSavedData();
-    updateAuthUI();
 });
 
 function initializeApp() {
@@ -31,12 +26,8 @@ function initializeApp() {
     document.documentElement.setAttribute('data-theme', AppState.theme);
     updateThemeButton();
 
-    // Show correct page on load
-    if (AppState.isLoggedIn) {
-        showPage(AppState.currentPage);
-    } else {
-        showPage('login');
-    }
+    // Show dashboard by default
+    showPage('dashboard');
 }
 
 // ===================================
@@ -137,128 +128,8 @@ function showPage(pageId) {
 // AUTHENTICATION LOGIC
 // ===================================
 
-function setupAuthEventListeners() {
-    // Toggle between login and signup
-    document.getElementById('toSignupBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showPage('signup');
-    });
-
-    document.getElementById('toLoginBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showPage('login');
-    });
-
-    document.getElementById('loginNavBtn')?.addEventListener('click', () => {
-        showPage('login');
-    });
-
-    // Logout
-    document.getElementById('logoutBtn')?.addEventListener('click', () => {
-        handleLogout();
-    });
-
-    // Login Form Submit
-    document.getElementById('loginForm')?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        handleLogin();
-    });
-
-    // Signup Form Submit
-    document.getElementById('signupForm')?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        handleSignup();
-    });
-
-    // Payment Form Submit
-    document.getElementById('paymentForm')?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        handlePayment();
-    });
-}
-
-function handleLogin() {
-    // Simulation: In a real app, this would be an API call
-    AppState.isLoggedIn = true;
-    AppState.user = { name: 'John Doe', email: 'john@example.com' };
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('user', JSON.stringify(AppState.user));
-
-    showNotification('Welcome back, John Doe!', 'success');
-    updateAuthUI();
-    showPage('dashboard');
-}
-
-function handleSignup() {
-    // Simulation
-    AppState.isLoggedIn = true;
-    AppState.user = { name: 'John Doe', email: 'john@example.com' };
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('user', JSON.stringify(AppState.user));
-
-    showNotification('Account created successfully!', 'success');
-    updateAuthUI();
-    showPage('dashboard');
-}
-
-function handleLogout() {
-    AppState.isLoggedIn = false;
-    AppState.user = null;
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('user');
-
-    showNotification('Logged out successfully', 'info');
-    updateAuthUI();
-    showPage('login');
-}
-
-function handlePayment() {
-    // Simulation
-    const submitBtn = document.querySelector('#paymentForm button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span>⌛</span> <span>Processing Payment...</span>';
-
-    setTimeout(() => {
-        AppState.plan = 'Professional';
-        localStorage.setItem('plan', 'Professional');
-
-        closeModal('paymentModal');
-        showNotification('Successfully upgraded to Pro Plan! 🚀', 'success');
-        updateAuthUI();
-
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-
-        if (AppState.currentPage === 'pricing') {
-            showPage('dashboard');
-        }
-    }, 2000);
-}
-
-function updateAuthUI() {
-    const userProfileSide = document.getElementById('userProfileSide');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const loginNavBtn = document.getElementById('loginNavBtn');
-
-    if (AppState.isLoggedIn) {
-        userProfileSide.style.display = 'block';
-        logoutBtn.style.display = 'block';
-        loginNavBtn.style.display = 'none';
-
-        // Update user info
-        userProfileSide.querySelector('.user-name').textContent = AppState.user.name;
-        userProfileSide.querySelector('.avatar').textContent = AppState.user.name.split(' ').map(n => n[0]).join('');
-        userProfileSide.querySelector('.user-plan').textContent = `${AppState.plan} Plan ${AppState.plan === 'Free' ? '' : '⭐'}`;
-    } else {
-        userProfileSide.style.display = 'none';
-        logoutBtn.style.display = 'none';
-        loginNavBtn.style.display = 'block';
-    }
-}
 // ===================================
-// THEME MANAGEMENT
+// UTILITY FUNCTIONS
 // ===================================
 
 function toggleTheme() {
@@ -475,20 +346,9 @@ function processContactFile(file) {
 // AI TOOLS
 // ===================================
 
-function checkPremiumAccess(featureName) {
-    if (AppState.plan === 'Free') {
-        showNotification(`The ${featureName} is a premium feature. Upgrade to Pro to unlock!`, 'info');
-        showPage('pricing');
-        return false;
-    }
-    return true;
-}
-
 function setupAITools() {
     // Grammar Checker
     document.getElementById('checkGrammarBtn')?.addEventListener('click', () => {
-        if (!checkPremiumAccess('Grammar Checker')) return;
-
         const input = document.getElementById('grammarInput').value;
         if (!input) {
             showNotification('Please enter some text to analyze', 'info');
@@ -508,8 +368,6 @@ function setupAITools() {
 
     // Subject Analyzer
     document.getElementById('analyzeSubjectBtn')?.addEventListener('click', () => {
-        if (!checkPremiumAccess('Subject Analyzer')) return;
-
         const input = document.getElementById('subjectInput').value;
         if (!input) {
             showNotification('Please enter a subject line', 'info');
@@ -529,8 +387,6 @@ function setupAITools() {
 
     // Spam Checker
     document.getElementById('checkSpamBtn')?.addEventListener('click', () => {
-        if (!checkPremiumAccess('Spam Checker')) return;
-
         const input = document.getElementById('spamInput').value;
         if (!input) {
             showNotification('Please paste your email content', 'info');
@@ -550,8 +406,6 @@ function setupAITools() {
 
     // Name Extractor
     document.getElementById('extractNamesBtn')?.addEventListener('click', () => {
-        if (!checkPremiumAccess('Name Extractor')) return;
-
         const input = document.getElementById('nameInput').value;
         if (!input) {
             showNotification('Please enter some email addresses', 'info');
